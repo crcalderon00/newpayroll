@@ -1,0 +1,38 @@
+@charset "utf-8";
+/* CSS Document */
+body
+{
+	margin:2px;
+	padding:0;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;	
+}
+
+#outerwrapper
+{
+	width:1000px;
+	height:auto;
+	margin:auto;
+}
+
+#header
+{
+	width:1000px;
+	height:auto;
+	margin:auto;
+}
+
+#links
+{
+	width:800px;
+	height:26px;
+	margin:auto;
+}
+
+#body
+{
+	width:1000px;
+	height:auto;
+	margin:auto;
+	margin-top:10px;
+}

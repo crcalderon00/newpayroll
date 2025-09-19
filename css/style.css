@@ -1,0 +1,80 @@
+@charset "utf-8";
+/* CSS Document */
+body, html
+{
+	margin:0;
+	padding:0;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size:11px;
+	background-color:#fff;
+}
+
+#outerwrapper
+{
+	width:1130px;
+	height:auto;
+	margin:auto;
+	background-image:url(../images/background.jpg);
+
+}
+
+#header
+{	
+	width:1095px;
+	height:70px;
+	margin:auto;
+	padding:2px;
+	background-image:url(../images/image.png);
+}
+
+#links
+{
+	width:1100px;
+	height:40px;
+	margin:auto;
+}
+
+#login 
+{
+	margin:auto;
+	margin-top:163px;
+	width:312px;
+	height:182px;
+}
+
+#loginbod
+{
+	margin:auto;
+	width:312px;
+	height:182px;
+}
+
+#body
+{
+	width:1100px;
+	height:auto;
+	margin:auto;
+}
+
+h4
+{
+	font-size:13px;
+	margin:0;
+	padding:0;
+}
+
+#slip
+{
+	width:747px;
+	height:auto;
+	margin:auto;
+}
+
+#slip2
+{
+	width:418px;
+	height:auto;
+	margin-left:150px;
+	margin-top:40px;
+	text-align: right;
+}
