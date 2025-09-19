@@ -5,7 +5,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-include('connection.php'); // This provides $conn
+include('connection.php'); 
 
 $qry = "SELECT count(*) AS cnt, sum(basic) AS sum_basic, sum(meal) AS sum_meal, sum(housing) AS sum_housing, sum(transport) AS sum_transport, sum(entertainment) AS sum_entertainment, sum(long_service) AS sum_long_service, sum(tax) AS sum_tax, sum(totall) AS sum_totall, monthname(date_s) AS month_name FROM salary GROUP BY month(date_s)";
 $run = mysqli_query($conn, $qry) or die(mysqli_error($conn));
