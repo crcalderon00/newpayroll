@@ -1,22 +1,22 @@
 <?php
 session_start();
-if (!isset($_SESSION['username'])) 
-{
-die(header('Location: ../index.php'));
+if (!isset($_SESSION['username'])) {
+    die(header('Location: ../index.php'));
 }
 
-?>
-<?php
-//database connection
+// database connection
 include('connection.php');
 include('../sanitise.php');
-$staff_id = sanitise($_GET['staff_id']);
+
+$staff_id  = sanitise($_GET['staff_id']);
 $salary_id = sanitise($_GET['salary_id']);
-$qry =("SELECT * FROM salary WHERE staff_id = '$staff_id' AND salary_id = '$salary_id'");
-$update = mysql_query($qry) or die(mysql_error());
-$row_update = mysql_fetch_assoc($update);
-$totalRows_update = mysql_num_rows($update);
+
+$qry = "SELECT * FROM salary WHERE staff_id = '$staff_id' AND salary_id = '$salary_id'";
+$update = mysqli_query($conn, $qry) or die(mysqli_error($conn));
+$row_update = mysqli_fetch_assoc($update);
+$totalRows_update = mysqli_num_rows($update);
 ?>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
