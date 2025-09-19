@@ -1,112 +1,188 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Login to your account</title>
 
-<script src="../SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
-<link href="../SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
-
 <style>
-body
-{
-	background-image:url(images/konferenz.jpg);
-	background-position:center;
-	background-repeat:no-repeat;
-	margin:0;
-	padding:0;
-	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	font-size:11px;
-}
-#login 
-{
-	margin:auto;
-	margin-top:220px;
-	width:312px;
-	height:182px;
-	margin-left:950px;
-}
-
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-size: cover;
+    color: #333;
+  }
+  #login {
+    max-width: 380px;
+    margin: 100px auto;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  
+  /* Tabs container */
+  .tabs {
+    display: flex;
+    background: #2c3e50;
+  }
+  .tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    color: #ecf0f1;
+    font-weight: 600;
+    user-select: none;
+    transition: background 0.3s;
+  }
+  .tab:hover {
+    background: #34495e;
+  }
+  .tab.active {
+    background: #ecf0f1;
+    color: #2c3e50;
+  }
+  
+  /* Content areas */
+  .tab-content {
+    padding: 25px 30px 35px;
+  }
+  
+  /* Forms */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    text-align: center;
+  }
+  
+  label {
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1.8px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 15px;
+    transition: border-color 0.3s;
+  }
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    border-color: #2980b9;
+    outline: none;
+  }
+  
+  input[type="submit"] {
+    background: #2980b9;
+    color: white;
+    font-weight: 700;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  input[type="submit"]:hover {
+    background: #1f6391;
+  }
+  
+  /* Reset password link */
+  .reset-link {
+    margin-top: 10px;
+    text-align: right;
+  }
+  .reset-link a {
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .reset-link a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive */
+  @media (max-width: 450px) {
+    #login {
+      margin: 50px 10px;
+    }
+  }
 </style>
 </head>
-
 <body>
+
 <div id="login">
-  <div id="TabbedPanels1" class="TabbedPanels">
-    <ul class="TabbedPanelsTabGroup">
-      <li class="TabbedPanelsTab" tabindex="0">Administrator Login</li>
-      <li class="TabbedPanelsTab" tabindex="0">Staff Login</li>
-    </ul>
-    <div class="TabbedPanelsContentGroup">
-      <div class="TabbedPanelsContent"><form id="form1" name="form1" method="post" action="login.php">
-          <table width="300" border="0">
-            <tr>
-              <td>&nbsp;</td>
-              <td><h4>ADMINISTRATOR LOGIN</h4></td>
-            </tr>
-            <tr>
-              <td width="70">Username</td>
-              <td width="220"><input type="text" name="username" id="username" /></td>
-            </tr>
-            <tr>
-              <td>Password</td>
-              <td><label for="password"></label>
-                <input type="password" name="password" id="password" /></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><input type="submit" name="submit" id="login2" value="Login" /></td>
-            </tr>
-          </table>
-      </form></div>
-      <div class="TabbedPanelsContent"><form id="form1" name="form1" method="post" action="stafflog.php">
-          <table width="302" border="0">
-            <tr>
-              <td>&nbsp;</td>
-              <td><h4>STAFF LOGIN</h4></td>
-            </tr>
-            <tr>
-              <td width="77">Staff ID</td>
-              <td width="209"><label for="staff_id"><span id="sprytextfield1">
-              <input type="text" name="staff_id" id="staff_id2" />
-              </span></label></td>
-            </tr>
-            <tr>
-              <td>Username</td>
-              <td><span id="sprytextfield2">
-                <label for="username"></label>
-                <input type="text" name="username" id="username" /> 
-              </span></td>
-            </tr>
-            <tr>
-              <td>Password</td>
-              <td><label for="password2"><span id="sprytextfield3">
-              <input type="password" name="password" id="password" />
-              </span></label></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><input type="submit" name="submit" id="submit" value="Login" /></td>
-            </tr>
-            <tr>
-              <td>&nbsp;</td>
-              <td><a href="resetpassword.php" class="bx2" rel="470-250">Reset password</a></td>
-            </tr>
-          </table>
-</form></div>
-    </div>
+  <div class="tabs">
+    <div class="tab active" data-tab="admin">Administrator Login</div>
+    <div class="tab" data-tab="staff">Staff Login</div>
   </div>
- 
+  
+  <div class="tab-content" id="admin" style="display: block;">
+    <form method="post" action="login.php">
+      <h4>ADMINISTRATOR LOGIN</h4>
+      <label for="admin-username">Username</label>
+      <input type="text" name="username" id="admin-username" required />
+      
+      <label for="admin-password">Password</label>
+      <input type="password" name="password" id="admin-password" required />
+      
+      <input type="submit" name="submit" value="Login" />
+    </form>
+  </div>
+  
+  <div class="tab-content" id="staff" style="display: none;">
+    <form method="post" action="stafflog.php">
+      <h4>STAFF LOGIN</h4>
+      
+      <label for="staff-id">Staff ID</label>
+      <input type="text" name="staff_id" id="staff-id" required />
+      
+      <label for="staff-username">Username</label>
+      <input type="text" name="username" id="staff-username" required />
+      
+      <label for="staff-password">Password</label>
+      <input type="password" name="password" id="staff-password" required />
+      
+      <input type="submit" name="submit" value="Login" />
+      
+      <div class="reset-link">
+        <a href="resetpassword.php">Reset password</a>
+      </div>
+    </form>
+  </div>
 </div>
-<script type="text/javascript" src="css/mootools.js"></script> 
-<script type="text/javascript" src="css/bumpbox-2.0.1.js" ></script> 
-<script type="text/javascript">
-//names,inSpeed,outSpeed,boxColor,backColor,bgOpacity,bRadius,borderWeight,borderColor,boxShadowSize,boxShadowColor,iconSet,effectsIn,effectsOut
-doBump('.bx2',850, 500, 'FFF', '6b7477', 0.7, 7, 2 ,'333', 15,'000', 2, Fx.Transitions.Back.easeOut, Fx.Transitions.linear);
+
+<script>
+  // Simple tabs logic
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      tabs.forEach(t => t.classList.remove('active'));
+      // Hide all contents
+      contents.forEach(c => (c.style.display = 'none'));
+
+      // Activate clicked tab and corresponding content
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('data-tab')).style.display = 'block';
+    });
+  });
 </script>
 
-<script type="text/javascript">
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
-</script>
 </body>
 </html>
