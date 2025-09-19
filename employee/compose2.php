@@ -2,25 +2,33 @@
 include('../admin/connection.php');
 include('../sanitise.php');
 session_start();
-if (!isset($_SESSION['staff_id'])) 
-{
-die(header('Location: ../index.php'));
+
+if (!isset($_SESSION['staff_id'])) {
+    header('Location: ../index.php');
+    exit();
 }
 
-
 $staff_id = $_SESSION['staff_id'];
-$qry1 = mysql_query("SELECT * FROM register_staff");
-$qry2 = mysql_query("SELECT * FROM register_staff WHERE staff_id = '$staff_id'");
-while ($row = mysql_fetch_array($qry2))
-	{
-	$sender = $row['fname'];
-	}
+
+// Use mysqli_query and pass $conn (from connection.php)
+$qry1 = mysqli_query($conn, "SELECT * FROM register_staff");
+$qry2 = mysqli_query($conn, "SELECT * FROM register_staff WHERE staff_id = '$staff_id'");
+
+if (!$qry1 || !$qry2) {
+    die("Query failed: " . mysqli_error($conn));
+}
+
+$sender = '';
+while ($row = mysqli_fetch_assoc($qry2)) {
+    $sender = $row['fname'];
+}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>Compose Message</title>
 <link rel="stylesheet" href="../css/staff.css" type="text/css" />
 <script src="../../SpryAssets/SpryMenuBar.js" type="text/javascript"></script>
 <link href="../../SpryAssets/SpryMenuBarHorizontal.css" rel="stylesheet" type="text/css" />
@@ -32,7 +40,8 @@ while ($row = mysql_fetch_array($qry2))
 <div id="links">
   <?php include('link.php'); ?>
 </div>
-<div id="body"><form action="msgcomp.php" method="post">
+<div id="body">
+<form action="msgcomp.php" method="post">
 <table width="100%" border="1" align="center">
   <tr>
     <td width="74">&nbsp;</td>
@@ -42,17 +51,18 @@ while ($row = mysql_fetch_array($qry2))
     <td width="262">&nbsp;</td>
     <td width="76">&nbsp;</td>
     <td width="49">&nbsp;</td>
-    </tr>
+  </tr>
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td><label for="sender"></label>
-      <input name="sender" type="hidden" id="sender" value ="<?php echo $staff_id; ?>" readonly="readonly"/></td>
+    <td>
+      <input name="sender" type="hidden" id="sender" value ="<?php echo htmlspecialchars($staff_id); ?>" readonly="readonly"/>
+    </td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    </tr>
+  </tr>
   <tr>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -66,22 +76,18 @@ while ($row = mysql_fetch_array($qry2))
     <td>&nbsp;</td>
     <td>&nbsp;</td>
     <td>To</td>
-    <td><?php
-
-
-if(mysql_num_rows($qry1)){
-$select= '<select name="receipient">';  
-while($rs=mysql_fetch_array($qry1)){
-    $select.='<option value="'.$rs['fname'].'">'.$rs['fname'].'</option>';
-  }
+    <td>
+<?php
+if (mysqli_num_rows($qry1) > 0) {
+    echo '<select name="recipient">';
+    while ($rs = mysqli_fetch_assoc($qry1)) {
+        echo '<option value="' . htmlspecialchars($rs['fname']) . '">' . htmlspecialchars($rs['fname']) . '</option>';
+    }
+    echo '</select>';
 }
-$select.='</select>';
-echo $select; 
 ?>
-      </td>
-
-<td> </td>
-
+    </td>
+    <td></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
@@ -112,7 +118,6 @@ echo $select;
     <td>&nbsp;</td>
     <td>&nbsp;</td>
   </tr>
- 
 </table>
 </form>
 </div>

@@ -1,17 +1,19 @@
 <?php
-include('../admin/connection.php');
+include('../admin/connection.php');  // Make sure this creates $conn as mysqli connection
 session_start();
-if (!isset($_SESSION['staff_id'])) 
-{
-die(header('Location: ../index.php'));
+if (!isset($_SESSION['staff_id'])) {
+    header('Location: ../index.php');
+    exit();
 }
 
-
 $staff_id = $_SESSION['staff_id'];
-$qry = mysql_query("SELECT * FROM salary WHERE staff_id = '$staff_id'");
-
+$qry = mysqli_query($conn, "SELECT * FROM salary WHERE staff_id = '$staff_id'");
+if (!$qry) {
+    die("Query failed: " . mysqli_error($conn));
+}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,19 +42,21 @@ $qry = mysql_query("SELECT * FROM salary WHERE staff_id = '$staff_id'");
     <td width="96"><strong>Long Service</strong></td>
     <td width="76"><strong>Tax</strong></td>
     <td width="73"><strong>Net Pay</strong></td>
-    </tr>
-  <tr><?php while ($tbl = mysql_fetch_array($qry)) { ?>
-    <td><?php echo $tbl['date_s'];?></td>
-    <td>&nbsp;<?php echo $tbl['basic']; ?></td>
-    <td>&nbsp;<?php echo $tbl['meal']; ?></td>
-    <td>&nbsp;<?php echo $tbl['housing']; ?></td>
-    <td>&nbsp;<?php echo $tbl['transport']; ?></td>
-    <td>&nbsp;<?php echo $tbl['entertainment']; ?></td>
-    <td>&nbsp;<?php echo $tbl['housing']; ?></td>
-    <td>&nbsp;<?php echo $tbl['long_service']; ?></td>
-    <td>&nbsp;<?php echo $tbl['tax']; ?></td>
-    <td>&nbsp;<?php echo $tbl['totall']; ?></td>
-    </tr>
+  </tr>
+  
+  <?php while ($tbl = mysqli_fetch_assoc($qry)) { ?>
+  <tr>
+    <td><?php echo htmlspecialchars($tbl['date_s']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['basic']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['meal']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['housing']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['transport']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['entertainment']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['housing']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['long_service']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['tax']); ?></td>
+    <td><?php echo htmlspecialchars($tbl['totall']); ?></td>
+  </tr>
   <?php } ?>
 </table>
 </div>

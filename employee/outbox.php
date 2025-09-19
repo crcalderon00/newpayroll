@@ -1,17 +1,22 @@
 <?php
-include('../admin/connection.php');
+include('../admin/connection.php'); // Make sure this sets $conn as mysqli connection
 session_start();
-if (!isset($_SESSION['staff_id'])) 
-{
-die(header('Location: ../index.php'));
+
+if (!isset($_SESSION['staff_id'])) {
+    header('Location: ../index.php');
+    exit();
 }
 
-
 $staff_id = $_SESSION['staff_id'];
-$qry = mysql_query("SELECT * FROM staff_outbox WHERE sender = '$staff_id'");
+$qry = mysqli_query($conn, "SELECT * FROM staff_outbox WHERE sender = '$staff_id'");
 
+if (!$qry) {
+    die("Query failed: " . mysqli_error($conn));
+}
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -39,23 +44,25 @@ $qry = mysql_query("SELECT * FROM staff_outbox WHERE sender = '$staff_id'");
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td width="119"><strong>Recepient ID</strong></td>
+    <td width="119"><strong>Recipient ID</strong></td>
     <td width="112"><strong>Sent to</strong></td>
     <td width="100"><strong>Subject</strong></td>
     <td width="128"><strong>Message</strong></td>
     <td width="128"><strong>Date Sent</strong></td>
     <td width="128">&nbsp;</td>
     <td width="133">&nbsp;</td>
-    </tr>
-  <tr><?php while ($tbl = mysql_fetch_array($qry)) { ?>
-    <td>&nbsp;<?php echo $tbl['staff_id']; ?></td>
-    <td>&nbsp;<?php echo $tbl['receiver']; ?></td>
-    <td>&nbsp;<?php echo $tbl['msg_subject']; ?></td>
-    <td><?php echo substr($tbl['msg_msg'],0,50); ?></td>
-    <td><?php echo $tbl['date_sent']; ?></td>
-    <td><a href="outboxmore.php?so_id=<?php echo $tbl['so_id'];?>">Read</a></td>
-    <td><a href="delete.php?so_id=<?php echo $tbl['so_id'];?>">Delete</a></td>
-    </tr>
+  </tr>
+
+  <?php while ($tbl = mysqli_fetch_assoc($qry)) { ?>
+  <tr>
+    <td>&nbsp;<?php echo htmlspecialchars($tbl['staff_id']); ?></td>
+    <td>&nbsp;<?php echo htmlspecialchars($tbl['receiver']); ?></td>
+    <td>&nbsp;<?php echo htmlspecialchars($tbl['msg_subject']); ?></td>
+    <td><?php echo htmlspecialchars(substr($tbl['msg_msg'], 0, 50)); ?></td>
+    <td><?php echo htmlspecialchars($tbl['date_sent']); ?></td>
+    <td><a href="outboxmore.php?so_id=<?php echo urlencode($tbl['so_id']); ?>">Read</a></td>
+    <td><a href="delete.php?so_id=<?php echo urlencode($tbl['so_id']); ?>">Delete</a></td>
+  </tr>
   <?php } ?>
 </table>
 </div>
