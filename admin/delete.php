@@ -1,20 +1,20 @@
 <?php 
 include('connection.php');
 include('../sanitise.php');
-$staff_id = sanitise($_GET['staff_id']);
-$qry = ("DELETE FROM register_staff WHERE staff_id = '$staff_id'");
-$qry1 = ("DELETE FROM salary WHERE staff_id = '$staff_id'");
-$con = mysql_query($qry) or die(mysql_error());
-$con1 = mysql_query($qry1) or die(mysql_error());
-if((!$con) && (!$con1))
-{
-	echo "not deleted successfully";
-	echo "<a href = view_staff.php>Go Back</a>";
-}
 
-else
-{
-	echo "staff has been successfully deleted";
-	echo "<a href = view_staff.php>Go Back Home</a>";
+$staff_id = sanitise($_GET['staff_id']); // will use global $conn from sanitise.php
+
+$qry  = "DELETE FROM register_staff WHERE staff_id = '$staff_id'";
+$qry1 = "DELETE FROM salary WHERE staff_id = '$staff_id'";
+
+$con  = $conn->query($qry);
+$con1 = $conn->query($qry1);
+
+if(!$con || !$con1) {
+    echo "Not deleted successfully: " . $conn->error;
+    echo "<br><a href='view_staff.php'>Go Back</a>";
+} else {
+    echo "Staff has been successfully deleted";
+    echo "<br><a href='view_staff.php'>Go Back Home</a>";
 }
 ?>

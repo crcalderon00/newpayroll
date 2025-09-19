@@ -1,12 +1,14 @@
 <?php
-$host = "localhost";
+$servername = "localhost";
 $username = "root";
-$password = ""; // Empty string for default XAMPP setup
-$db_name = "newsalary";
+$password = ""; // or your actual password
+$dbname = "newsalary";
 
-$conn = mysqli_connect($host, $username, $password, $db_name);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>

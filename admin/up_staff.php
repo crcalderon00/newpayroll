@@ -1,13 +1,20 @@
 <?php
-
-//database connection
+// Database connection
 include('connection.php');
 include('../sanitise.php');
+
 $staff_id = sanitise($_GET['staff_id']);
-$qry =("SELECT * FROM register_staff WHERE staff_id = '$staff_id'");
-$update = mysql_query($qry) or die(mysql_error());
-$row_update = mysql_fetch_assoc($update);
-$totalRows_update = mysql_num_rows($update);
+
+// Use mysqli (object-oriented) instead of old mysql functions
+$qry = "SELECT * FROM register_staff WHERE staff_id = '$staff_id'";
+$update = $conn->query($qry);
+
+if (!$update) {
+    die("Query failed: " . $conn->error);
+}
+
+$row_update = $update->fetch_assoc();
+$totalRows_update = $update->num_rows;
 ?>
 
 <html>
@@ -31,8 +38,8 @@ $totalRows_update = mysql_num_rows($update);
       <td nowrap align="right">Department</td>
       <td><input name="department" type="text" value="<?php echo $row_update['department']; ?>" size="32"></td>
     </tr>
- 	<tr>
-      <td nowrap align="right">	Position</td>
+    <tr>
+      <td nowrap align="right">Position</td>
       <td><input name="position" type="text" value="<?php echo $row_update['position']; ?>" size="32"></td>
     </tr>
     <tr>

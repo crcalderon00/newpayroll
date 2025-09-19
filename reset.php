@@ -1,16 +1,20 @@
 <?php
-include('admin/connection.php');  // assumes this sets $conn as mysqli connection
+include('admin/connection.php');
 include('sanitise.php');
+session_start();
+
+if(!isset($_POST['staff_id']) || !isset($_POST['newpassword'])) {
+    die("Required data missing.");
+}
 
 $staff_id = sanitise($_POST['staff_id'], $conn);
 $password = sanitise($_POST['newpassword'], $conn);
 
-// Use mysqli_query instead of mysql_query
-$qry = mysqli_query($conn, "UPDATE register_staff SET password = '$password' WHERE staff_id = '$staff_id'");
+$qry = $conn->query("UPDATE register_staff SET password = '$password' WHERE staff_id = '$staff_id'");
 
-if ($qry) {
+if($qry) {
     echo "Password reset successful";
 } else {
-    echo "Not successful: " . mysqli_error($conn);
+    echo "Password reset failed: " . $conn->error;
 }
 ?>
